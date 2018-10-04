@@ -68,19 +68,21 @@ def multi_match(data, keyword):
     """
     index_total = 0
     output_text = str()
+    output_tsv = "PMID\tIndex\tTitle\tIndex_in_article\tSentences\n"
     for i in data:
         index_total+=1
         if bool(re.search(keyword, i[2], re.IGNORECASE)):
             sentence_found = str()
             index = 0
             sentence_set = i[2].split(".")
+            PMID = i[0].split(":")[1]
             for j in sentence_set:
                 if bool(re.search(keyword, j, re.IGNORECASE)):
                     index += 1
                     sentence_found += "\t" + str(index) + ". " + str.lstrip(j) + ".\n"
+                    output_tsv += "{}\t{}\t{}\t{}\t{}\n".format(PMID,index_total,i[1],str(index),str.lstrip(j))
                 else:
                     continue
-            PMID = i[0].split(":")[1]
             output_text+="Index:%s PMID:%s, Title: %s\nSentence:\n%s\n" % (index_total,PMID, i[1], sentence_found)
             #print("Index:%s ID:%s, Title: %s\nSentence:\n%s" % (index_total,i[0], i[1], sentence_found))
         else:
@@ -91,6 +93,8 @@ def multi_match(data, keyword):
             pass
     with open("{}_Toponym_Output.txt".format(keyword), "w") as file:
         file.write(output_text)
+    with open("{}_sentences.tsv".format(keyword),"w") as file:
+        file.write(output_tsv)
     # return
 
 def main():
@@ -99,11 +103,11 @@ def main():
     :return:
     """
     #with open('/Users/xiaoliang/Downloads/abstracts.tsv', 'r') as f:
-    with open('/Users/xiaoliang/Desktop/Study/2018FALL/PhD/Research/University_result.txt', 'r') as f:
+    with open('/Users/xiaoliang/Desktop/Study/2018FALL/PhD/Research/Los_Angeles_result.txt', 'r') as f:
         f1 = subset_training_data(f, full=True)  # 15,544,339
     # keywords = ["London", "New York", "Boston", "Lebanon", "Manchester", "Paris", "Berlin", "Washington", "Beijing",
     #             "Taizhou"]
-    keywords = ["University"]
+    keywords = ["Los Angeles"]
     type_judge(get_info(f1), keywords)
     import os
     os.getcwd()
