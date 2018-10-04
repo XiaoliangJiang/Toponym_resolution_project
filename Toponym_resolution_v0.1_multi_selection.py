@@ -99,11 +99,11 @@ def main():
     :return:
     """
     #with open('/Users/xiaoliang/Downloads/abstracts.tsv', 'r') as f:
-    with open('/Users/xiaoliang/Desktop/Study/2018FALL/PhD/Research/Lebanon_result.txt', 'r') as f:
+    with open('/Users/xiaoliang/Desktop/Study/2018FALL/PhD/Research/University_result.txt', 'r') as f:
         f1 = subset_training_data(f, full=True)  # 15,544,339
     # keywords = ["London", "New York", "Boston", "Lebanon", "Manchester", "Paris", "Berlin", "Washington", "Beijing",
     #             "Taizhou"]
-    keywords = ["Lebanon"]
+    keywords = ["University"]
     type_judge(get_info(f1), keywords)
     import os
     os.getcwd()
